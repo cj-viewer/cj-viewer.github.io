@@ -20,28 +20,44 @@
     var CONFIG = {"hostname":"cj-viewer.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
   </script>
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="井底之蛙的blog">
-<meta property="og:url" content="https://cj-viewer.github.io/index.html">
+  <meta property="og:type" content="article">
+<meta property="og:title" content="ADS_Note--RB-Tree">
+<meta property="og:url" content="https://cj-viewer.github.io/2022/03/07/post001/index.html">
 <meta property="og:site_name" content="井底之蛙的blog">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://cj-viewer.github.io/2022/03/07/post001/pic0.png">
+<meta property="og:image" content="https://cj-viewer.github.io/2022/03/07/post001/pic1.png">
+<meta property="og:image" content="https://cj-viewer.github.io/2022/03/07/post001/pic2.png">
+<meta property="og:image" content="https://cj-viewer.github.io/2022/03/07/post001/pic3.png">
+<meta property="og:image" content="https://cj-viewer.github.io/2022/03/07/post001/pic4.png">
+<meta property="og:image" content="https://cj-viewer.github.io/2022/03/07/post001/pic5.png">
+<meta property="og:image" content="https://cj-viewer.github.io/2022/03/07/post001/pic6.png">
+<meta property="og:image" content="https://cj-viewer.github.io/2022/03/07/post001/pic7.png">
+<meta property="og:image" content="https://cj-viewer.github.io/2022/03/07/post001/pic8.png">
+<meta property="og:image" content="https://cj-viewer.github.io/2022/03/07/post001/pic9.png">
+<meta property="og:image" content="https://cj-viewer.github.io/2022/03/07/post001/pica.png">
+<meta property="og:image" content="https://cj-viewer.github.io/2022/03/07/post001/picb.png">
+<meta property="article:published_time" content="2022-03-07T08:55:15.000Z">
+<meta property="article:modified_time" content="2022-03-08T14:49:21.026Z">
 <meta property="article:author" content="井底之蛙&lt;&#x2F;br&gt;不知大海之辽阔&lt;&#x2F;br&gt;但知晓天空之蓝">
+<meta property="article:tag" content="ads">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cj-viewer.github.io/2022/03/07/post001/pic0.png">
 
-<link rel="canonical" href="https://cj-viewer.github.io/">
+<link rel="canonical" href="https://cj-viewer.github.io/2022/03/07/post001/">
 
 
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome : true,
-    isPost : false,
+    isHome : false,
+    isPost : true,
     lang   : 'en'
   };
 </script>
 
-  <title>井底之蛙的blog</title>
+  <title>ADS_Note--RB-Tree | 井底之蛙的blog</title>
   
 
 
@@ -182,9 +198,10 @@
         <div class="content-wrap">
           
 
-          <div class="content index posts-expand">
+          <div class="content post posts-expand">
             
-      
+
+    
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
@@ -200,10 +217,9 @@
       <meta itemprop="name" content="井底之蛙的blog">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/03/07/post001/" class="post-title-link" itemprop="url">ADS_Note--RB-Tree</a>
-        </h2>
+        <h1 class="post-title" itemprop="name headline">
+          ADS_Note--RB-Tree
+        </h1>
 
         <div class="post-meta">
             <span class="post-meta-item">
@@ -242,89 +258,155 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id><a href="#" class="headerlink" title></a></h2>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/03/07/post001/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
+        <h2 id><a href="#" class="headerlink" title></a><span id="more"></span></h2><h3 id="1-RB-Tree’s-properties"><a href="#1-RB-Tree’s-properties" class="headerlink" title="1. RB-Tree’s properties"></a>1. RB-Tree’s properties</h3><ul>
+<li>A RB-Tree is a BST (Binary Search Tree)</li>
+<li>Every node is either red or black</li>
+<li>The root is black</li>
+<li>Every leaf(NIL) is black</li>
+<li>The children of a red node must be black</li>
+<li><p>For each node $v$, <strong>all descending path from $v$ to leaves contain the same number of black node.</strong> (Note: Also known as black height or $bh(v)$, <strong>excluding $v$</strong>)</p>
+</li>
+<li><p>Corollary: For any subtree T in RB-Tree: $bh(T) \geq h(T)/2$</p>
+</li>
+</ul>
+<blockquote>
+<p><em>lemma</em>: A RB-Tree T(extended version) with n internal node has height at most $2log(n+1)$</p>
+<p><em>Proof</em>: </p>
+<p>For any $u \in T$ </p>
+<p>($Tu$ : the subtree rooted at u, size($Tu$) : internal node of $Tu$)</p>
+<p>Will show</p>
+<p>size($Tu$) $\geq$  $2^{bh(u)}-1$ for any u (inductive hypothesis, will be proved later)</p>
+<p>let u = root of T</p>
+<p>size($T$) $\geq$ $2^{bh(T)}-1$ $\geq$ $2^{h(T)/2}-1$ </p>
+<p>therefore we have</p>
+<p>$h(T) \leq 2log(n+1)$</p>
+<p><em>Inductive hypothesis</em> : Assume that all $Tu$ with height $\leq$ $k$ , size($Tu$) $\geq$ $2^{bh(u)}-1$ </p>
+<p>Inductive steps:</p>
+<p>Base case when k = 0(obvious, omitted)</p>
+<p>when height of $Tu$ = $k+1$ </p>
+<p><img src="/2022/03/07/post001/pic0.png" alt="inductive"></p>
+<p>$bh(v_1),bh(v_2) \geq bh(u)-1$</p>
+<p>size($Tu$) </p>
+<p>= $1+size(Tv_1)+size(Tv_2$</p>
+<p>$\geq 1+2^{bh(v_1)}-1+2^{bh(v_2)}-1$</p>
+<p>= $2^{bh(v_1)}+2^{bh(v_2)}-1$</p>
+<p>$\geq 2^{bh(u)-1} + 2^{bh(u)-1}-1$ </p>
+<p>$= 2^{bh(u)}-1$</p>
+</blockquote>
+<hr>
+<h3 id="2-RB-Tree-operations"><a href="#2-RB-Tree-operations" class="headerlink" title="2. RB-Tree operations"></a>2. RB-Tree operations</h3><h4 id="Insertion"><a href="#Insertion" class="headerlink" title="Insertion"></a>Insertion</h4><p>First we insert as in BST , then mark the new node as red. </p>
+<p>We neglect the symmetric case, only discuss new node $v$ as left child</p>
+<h6 id="case-1-sibling-of-u-is-red"><a href="#case-1-sibling-of-u-is-red" class="headerlink" title="case 1 sibling of u is red"></a><em>case 1</em> sibling of u is red</h6><p>First we do:</p>
+<p><img src="/2022/03/07/post001/pic1.png" alt="case 1"></p>
+<p>Then for different cases: </p>
+<ul>
+<li>If parent of p is black $\rightarrow$ done</li>
+<li>If p is the root $\rightarrow$ label p as black, done</li>
+<li>If parent of p is red $\rightarrow$ violation progress upwards</li>
+</ul>
+<h6 id="case-2-sibling-of-u-is-black"><a href="#case-2-sibling-of-u-is-black" class="headerlink" title="case 2 sibling of u is black"></a><em>case 2</em> sibling of u is black</h6><p><em>case 2.1 v is the left child of u</em></p>
+<p><img src="/2022/03/07/post001/pic2.png" style="zoom:67%;"></p>
+<p><em>case 2.2 v is the right child of u</em></p>
+<p><img src="/2022/03/07/post001/pic3.png" style="zoom:67%;"></p>
+<p>as you can see, it goes to case2.1</p>
+<blockquote>
+<p><strong>Summarization:</strong></p>
+<p><img src="/2022/03/07/post001/pic4.png" style="zoom:67%;"></p>
+<p>Time complexity for insertion : $O(lgn)$</p>
+<p>Max num of rotations : 2</p>
+</blockquote>
+<h4 id="Deletion"><a href="#Deletion" class="headerlink" title="Deletion"></a>Deletion</h4><p>First we do deletion as in BST , which means the deleted node has at most one child(excluding NIL)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">If the deleted node <span class="keyword">is</span> red:</span><br><span class="line">    done</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span> it has a red child:</span><br><span class="line">    mark the child <span class="keyword">as</span> black</span><br><span class="line">    done</span><br></pre></td></tr></table></figure>
+<p><img src="/2022/03/07/post001/pic5.png" style="zoom: 67%;"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">else</span> <span class="keyword">if</span> its children are <span class="built_in">all</span> black</span><br></pre></td></tr></table></figure>
+<p><img src="/2022/03/07/post001/pic6.png" alt="case1"></p>
+<p>now we discuss the double black cases</p>
+<h6 id="case-1-the-sibling-of-double-black-is-black"><a href="#case-1-the-sibling-of-double-black-is-black" class="headerlink" title="case 1  the sibling of double black is black"></a><em>case 1</em>  the sibling of double black is black</h6><p><em>case 1.1 the children of u are all black</em></p>
+<p>First we do</p>
+<p><img src="/2022/03/07/post001/pic7.png" style="zoom:67%;"> </p>
+<p>Then</p>
+<ul>
+<li>If p was red: label p as black</li>
+<li>If p was a root(black): label p as black</li>
+<li>If p was black (non-root): p becomes double black (propagate upwards)</li>
+</ul>
+<p><em>case 1.2 The right child of u is red</em></p>
+<p><img src="/2022/03/07/post001/pic8.png" style="zoom:67%;"></p>
+<p><em>case 1.3 the right child of u is black, the left child of u is red</em></p>
+<p><img src="/2022/03/07/post001/pic9.png" style="zoom:67%;"></p>
+<h6 id="case-2-the-sibling-of-double-black-node-is-red"><a href="#case-2-the-sibling-of-double-black-node-is-red" class="headerlink" title="case 2 the sibling of double black node is red"></a>case 2 the sibling of double black node is red</h6><p><img src="/2022/03/07/post001/pica.png" style="zoom:67%;"></p>
+<p>which goes to case 1</p>
+<blockquote>
+<p><strong>Summarization</strong></p>
+<p><img src="/2022/03/07/post001/picb.png" style="zoom:67%;"></p>
+<p>Time complexity: $O(log(n))$</p>
+<p>Max num of rotations : 3</p>
+</blockquote>
+<hr>
+<h3 id="3-Conclusions"><a href="#3-Conclusions" class="headerlink" title="3. Conclusions"></a>3. Conclusions</h3><h6 id="AVL-vs-RB-Tree"><a href="#AVL-vs-RB-Tree" class="headerlink" title="AVL vs. RB-Tree"></a>AVL vs. RB-Tree</h6><div class="table-container">
+<table>
+<thead>
+<tr>
+<th></th>
+<th>AVL</th>
+<th>RB</th>
+<th>performance</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Search</td>
+<td>$O(lgn)$</td>
+<td>$O(lgn)$</td>
+<td>AVL is better</td>
+</tr>
+<tr>
+<td>Insertion</td>
+<td>$O(lgn)$</td>
+<td>$O(lgn)$</td>
+<td>almost the same</td>
+</tr>
+<tr>
+<td>Deletion</td>
+<td>$O(lgn)$</td>
+<td>$O(lgn)$</td>
+<td>RB is better</td>
+</tr>
+</tbody>
+</table>
+</div>
+<blockquote>
+<p>Although both the AVL and RB-tree has the same worst case boundary, the constant term varies.</p>
+<p>RB-Tree sacrifice the perfect balance for speed up in Deletion process. While AVL may need h(T) rotations ,RB-Tree needs at most 3 times, making RB-Tree widely adopted in industry field.</p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/ads/" rel="tag"># ads</a>
+          </div>
+
         
-      
-    </div>
 
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/03/06/Post/" rel="prev" title="Post">
+      <i class="fa fa-chevron-left"></i> Post
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
       </footer>
+    
   </article>
   
   
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://cj-viewer.github.io/2022/03/06/Post/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/sky.png">
-      <meta itemprop="name" content="井底之蛙</br>不知大海之辽阔</br>但知晓天空之蓝">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="井底之蛙的blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/03/06/Post/" class="post-title-link" itemprop="url">Post</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2022-03-06 19:48:25 / Modified: 19:49:06" itemprop="dateCreated datePublished" datetime="2022-03-06T19:48:25+08:00">2022-03-06</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="Notification"><a href="#Notification" class="headerlink" title="Notification"></a>Notification</h3><p>The blog is coming soon</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-
   
 
 
@@ -377,6 +459,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-RB-Tree%E2%80%99s-properties"><span class="nav-number">1.1.</span> <span class="nav-text">1. RB-Tree’s properties</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-RB-Tree-operations"><span class="nav-number">1.2.</span> <span class="nav-text">2. RB-Tree operations</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Insertion"><span class="nav-number">1.2.1.</span> <span class="nav-text">Insertion</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#case-1-sibling-of-u-is-red"><span class="nav-number">1.2.1.0.1.</span> <span class="nav-text">case 1 sibling of u is red</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#case-2-sibling-of-u-is-black"><span class="nav-number">1.2.1.0.2.</span> <span class="nav-text">case 2 sibling of u is black</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Deletion"><span class="nav-number">1.2.2.</span> <span class="nav-text">Deletion</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#case-1-the-sibling-of-double-black-is-black"><span class="nav-number">1.2.2.0.1.</span> <span class="nav-text">case 1  the sibling of double black is black</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#case-2-the-sibling-of-double-black-node-is-red"><span class="nav-number">1.2.2.0.2.</span> <span class="nav-text">case 2 the sibling of double black node is red</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-Conclusions"><span class="nav-number">1.3.</span> <span class="nav-text">3. Conclusions</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#AVL-vs-RB-Tree"><span class="nav-number">1.3.0.0.1.</span> <span class="nav-text">AVL vs. RB-Tree</span></a></li></ol></li></ol></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 

@@ -20,22 +20,15 @@
     var CONFIG = {"hostname":"cj-viewer.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
   </script>
 
-  <meta property="og:type" content="article">
-<meta property="og:title" content="ADS_Note--B+ Tree">
-<meta property="og:url" content="https://cj-viewer.github.io/2022/03/09/post002/index.html">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="井底之蛙的blog">
+<meta property="og:url" content="https://cj-viewer.github.io/categories/Hardware/index.html">
 <meta property="og:site_name" content="井底之蛙的blog">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://cj-viewer.github.io/2022/03/09/post002/image-20220313132549526.png">
-<meta property="og:image" content="https://cj-viewer.github.io/2022/03/09/post002/image-20220313132645421.png">
-<meta property="og:image" content="https://cj-viewer.github.io/2022/03/09/post002/image-20220313133112558.png">
-<meta property="article:published_time" content="2022-03-09T04:48:20.000Z">
-<meta property="article:modified_time" content="2022-03-13T06:06:42.349Z">
 <meta property="article:author" content="井底之蛙&lt;&#x2F;br&gt;不知大海之辽阔&lt;&#x2F;br&gt;但知晓天空之蓝">
-<meta property="article:tag" content="ads">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://cj-viewer.github.io/2022/03/09/post002/image-20220313132549526.png">
 
-<link rel="canonical" href="https://cj-viewer.github.io/2022/03/09/post002/">
+<link rel="canonical" href="https://cj-viewer.github.io/categories/Hardware/">
 
 
 <script id="page-configurations">
@@ -43,12 +36,12 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : true,
+    isPost : false,
     lang   : 'en'
   };
 </script>
 
-  <title>ADS_Note--B+ Tree | 井底之蛙的blog</title>
+  <title>Category: Hardware | 井底之蛙的blog</title>
   
 
 
@@ -189,158 +182,51 @@
         <div class="content-wrap">
           
 
-          <div class="content post posts-expand">
+          <div class="content category">
             
 
-    
   
   
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://cj-viewer.github.io/2022/03/09/post002/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/sky.png">
-      <meta itemprop="name" content="井底之蛙</br>不知大海之辽阔</br>但知晓天空之蓝">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="井底之蛙的blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          ADS_Note--B+ Tree
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2022-03-09 12:48:20" itemprop="dateCreated datePublished" datetime="2022-03-09T12:48:20+08:00">2022-03-09</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-03-13 14:06:42" itemprop="dateModified" datetime="2022-03-13T14:06:42+08:00">2022-03-13</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Algorithm/" itemprop="url" rel="index"><span itemprop="name">Algorithm</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
+  
+  <div class="post-block">
+    <div class="posts-collapse">
+      <div class="collection-title">
+        <h2 class="collection-header">Hardware
+          <small>Category</small>
+        </h2>
+      </div>
 
       
-        <h2 id><a href="#" class="headerlink" title></a><span id="more"></span></h2><h3 id="1-B-Tree’s-properties"><a href="#1-B-Tree’s-properties" class="headerlink" title="1. B+ Tree’s properties"></a>1. B+ Tree’s properties</h3><ul>
-<li>$h(T)\approx O(lg_Mn)$</li>
-<li>fanout of the root $\in [2,M]$ (if the root is not leaf)</li>
-<li>fanout of an internal node(non-root) $\in [\lceil M/2\rceil,M]$</li>
-<li>keys(data pointers, in sorted order) in a leaf(non-root) $\in [\lceil M/2\rceil,M]$ </li>
-<li>all leaves are at the same level</li>
-<li>keys in nodes are in ascending order</li>
-<li>keys $K_i$ in internal nodes  $u$ represent the smallest key in leaves of  the (i+1)th subtree</li>
-<li>If a root is also a leaf : keys in it $\in [1,M]$</li>
-</ul>
-<blockquote>
-<p>leaves $\leq \frac{n}{\lceil M/2 \rceil}$ </p>
-<p>height = $O(lg_{\lceil M/2 \rceil} \frac{n}{\lceil M/2 \rceil})$ = $O(lg_M N)$</p>
-<p>findkey = $O(lg_2M)*O(lg_M N) = O(lgN)$</p>
-</blockquote>
-<hr>
-<h3 id="2-B-Tree-operations"><a href="#2-B-Tree-operations" class="headerlink" title="2. B+-Tree operations"></a>2. B+-Tree operations</h3><h4 id="Insertion"><a href="#Insertion" class="headerlink" title="Insertion"></a>Insertion</h4><p>If the insertion break the limitation</p>
-<p>split :</p>
-<p><img src="/2022/03/09/post002/image-20220313132549526.png" alt="image-20220313132549526"></p>
-<p><img src="/2022/03/09/post002/image-20220313132645421.png" alt="image-20220313132645421"></p>
-<blockquote>
-<p>Insertion : $O(M) * O(lg_MN) = O(Mlg_M N)$</p>
-</blockquote>
-<h4 id="Deletion"><a href="#Deletion" class="headerlink" title="Deletion"></a>Deletion</h4><p>If siblings next to it has more than $\lceil M/2 \rceil$ keys :</p>
-<p>​    take 1 from the sibling</p>
-<p>​    update the keys in its ancestors</p>
-<p>If siblings next to it has only $\lceil M/2 \rceil$ keys :</p>
-<p>merge:</p>
-<p><img src="/2022/03/09/post002/image-20220313133112558.png" alt="image-20220313133112558"></p>
-<blockquote>
-<p>Deletion : $O(M)*O(lg_M N) = O(Mlg_M N)$</p>
-</blockquote>
-<h3 id="3-Conclusions"><a href="#3-Conclusions" class="headerlink" title="3. Conclusions"></a>3. Conclusions</h3><h6 id="AVL-vs-RB-Tree-vs-B-Tree"><a href="#AVL-vs-RB-Tree-vs-B-Tree" class="headerlink" title="AVL vs. RB-Tree vs. B+ Tree"></a>AVL vs. RB-Tree vs. B+ Tree</h6><div class="table-container">
-<table>
-<thead>
-<tr>
-<th></th>
-<th>AVL</th>
-<th>RB</th>
-<th>B+</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Search</td>
-<td>$O(lgn)$</td>
-<td>$O(lgn)$</td>
-<td>$O(lgN)$</td>
-</tr>
-<tr>
-<td>Insertion</td>
-<td>$O(lgn)$</td>
-<td>$O(lgn)$</td>
-<td>$O(Mlg_MN)$</td>
-</tr>
-<tr>
-<td>Deletion</td>
-<td>$O(lgn)$</td>
-<td>$O(lgn)$</td>
-<td>$O(Mlg_MN)$</td>
-</tr>
-</tbody>
-</table>
-</div>
-
+    <div class="collection-year">
+      <span class="collection-header">2022</span>
     </div>
 
-    
-    
-    
+  <article itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
 
-      <footer class="post-footer">
-          <div class="post-tags">
-              <a href="/tags/ads/" rel="tag"># ads</a>
-          </div>
+      <div class="post-meta">
+        <time itemprop="dateCreated"
+              datetime="2022-03-09T12:48:20+08:00"
+              content="2022-03-09">
+          03-09
+        </time>
+      </div>
 
-        
+      <div class="post-title">
+          <a class="post-title-link" href="/2022/03/09/post003/" itemprop="url">
+            <span itemprop="name">浮点运算</span>
+          </a>
+      </div>
 
-
-        
-    <div class="post-nav">
-      <div class="post-nav-item">
-    <a href="/2022/03/09/post003/" rel="prev" title="浮点运算">
-      <i class="fa fa-chevron-left"></i> 浮点运算
-    </a></div>
-      <div class="post-nav-item"></div>
-    </div>
-      </footer>
-    
+    </header>
   </article>
+
+    </div>
+  </div>
   
   
+  
+
   
 
 
@@ -393,7 +279,6 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-B-Tree%E2%80%99s-properties"><span class="nav-number">1.1.</span> <span class="nav-text">1. B+ Tree’s properties</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-B-Tree-operations"><span class="nav-number">1.2.</span> <span class="nav-text">2. B+-Tree operations</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Insertion"><span class="nav-number">1.2.1.</span> <span class="nav-text">Insertion</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Deletion"><span class="nav-number">1.2.2.</span> <span class="nav-text">Deletion</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-Conclusions"><span class="nav-number">1.3.</span> <span class="nav-text">3. Conclusions</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#AVL-vs-RB-Tree-vs-B-Tree"><span class="nav-number">1.3.0.0.1.</span> <span class="nav-text">AVL vs. RB-Tree vs. B+ Tree</span></a></li></ol></li></ol></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -512,59 +397,6 @@
   
 
   
-      
-
-<script>
-  if (typeof MathJax === 'undefined') {
-    window.MathJax = {
-      loader: {
-        source: {
-          '[tex]/amsCd': '[tex]/amscd',
-          '[tex]/AMScd': '[tex]/amscd'
-        }
-      },
-      tex: {
-        inlineMath: {'[+]': [['$', '$']]},
-        tags: 'ams'
-      },
-      options: {
-        renderActions: {
-          findScript: [10, doc => {
-            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
-              const display = !!node.type.match(/; *mode=display/);
-              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
-              const text = document.createTextNode('');
-              node.parentNode.replaceChild(text, node);
-              math.start = {node: text, delim: '', n: 0};
-              math.end = {node: text, delim: '', n: 0};
-              doc.math.push(math);
-            });
-          }, '', false],
-          insertedScript: [200, () => {
-            document.querySelectorAll('mjx-container').forEach(node => {
-              let target = node.parentNode;
-              if (target.nodeName.toLowerCase() === 'li') {
-                target.parentNode.classList.add('has-jax');
-              }
-            });
-          }, '', false]
-        }
-      }
-    };
-    (function () {
-      var script = document.createElement('script');
-      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
-      script.defer = true;
-      document.head.appendChild(script);
-    })();
-  } else {
-    MathJax.startup.document.state(0);
-    MathJax.texReset();
-    MathJax.typeset();
-  }
-</script>
-
-    
 
   
 

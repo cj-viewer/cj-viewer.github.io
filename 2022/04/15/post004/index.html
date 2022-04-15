@@ -21,19 +21,17 @@
   </script>
 
   <meta property="og:type" content="article">
-<meta property="og:title" content="浮点运算">
-<meta property="og:url" content="https://cj-viewer.github.io/2022/03/09/post003/index.html">
+<meta property="og:title" content="补码算法分析">
+<meta property="og:url" content="https://cj-viewer.github.io/2022/04/15/post004/index.html">
 <meta property="og:site_name" content="井底之蛙的blog">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://cj-viewer.github.io/2022/03/09/post003/image-20220407163908680.png">
-<meta property="article:published_time" content="2022-03-09T04:48:20.000Z">
-<meta property="article:modified_time" content="2022-04-15T14:27:47.497Z">
+<meta property="article:published_time" content="2022-04-15T14:31:20.000Z">
+<meta property="article:modified_time" content="2022-04-15T14:32:41.192Z">
 <meta property="article:author" content="井底之蛙&lt;&#x2F;br&gt;不知大海之辽阔&lt;&#x2F;br&gt;但知晓天空之蓝">
 <meta property="article:tag" content="Computer System">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://cj-viewer.github.io/2022/03/09/post003/image-20220407163908680.png">
 
-<link rel="canonical" href="https://cj-viewer.github.io/2022/03/09/post003/">
+<link rel="canonical" href="https://cj-viewer.github.io/2022/04/15/post004/">
 
 
 <script id="page-configurations">
@@ -46,7 +44,7 @@
   };
 </script>
 
-  <title>浮点运算 | 井底之蛙的blog</title>
+  <title>补码算法分析 | 井底之蛙的blog</title>
   
 
 
@@ -194,7 +192,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://cj-viewer.github.io/2022/03/09/post003/">
+    <link itemprop="mainEntityOfPage" href="https://cj-viewer.github.io/2022/04/15/post004/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/sky.png">
@@ -207,7 +205,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          浮点运算
+          补码算法分析
         </h1>
 
         <div class="post-meta">
@@ -216,16 +214,10 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
+              
 
-              <time title="Created: 2022-03-09 12:48:20" itemprop="dateCreated datePublished" datetime="2022-03-09T12:48:20+08:00">2022-03-09</time>
+              <time title="Created: 2022-04-15 22:31:20 / Modified: 22:32:41" itemprop="dateCreated datePublished" datetime="2022-04-15T22:31:20+08:00">2022-04-15</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-04-15 22:27:47" itemprop="dateModified" datetime="2022-04-15T22:27:47+08:00">2022-04-15</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -247,48 +239,102 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id><a href="#" class="headerlink" title></a><span id="more"></span></h2><h3 id="浮点数算法分析"><a href="#浮点数算法分析" class="headerlink" title="浮点数算法分析"></a><center>浮点数算法分析</center></h3><h4 id="1-IEEE-754标准浮点数："><a href="#1-IEEE-754标准浮点数：" class="headerlink" title="1. IEEE 754标准浮点数："></a>1. IEEE 754标准浮点数：</h4><p>IEEE 754浮点数标准是从逻辑上用三元组{S，T，M}来表示一个数 V 的，即 $V = (-1)^S<em>2^{T-offset}</em>1.M$</p>
-<p>对不同长度的浮点数的存储为分配如图（图片来源与网络）：</p>
-<p><img src="/2022/03/09/post003/image-20220407163908680.png" alt="image-20220313132549526"></p>
-<ul>
-<li><p>S位符号码，确定表示数的正负，从表达式中看出<strong>1</strong>表示负，<strong>0</strong>表示正</p>
-</li>
-<li><p>在 IEEE 754 浮点数标准中，T阶码是用移码表示的，移码的定义：移码 = 真值 + 偏置值</p>
-<p>在 IEEE 754 标准中，移码的偏置值是 2^(n-1)-1，8 位的移码的偏置值为$2^{(8-1)}-1 = 127</p>
-<p>对于阶码全为0和全为1的情况则有不同的处理方式：</p>
-<blockquote>
-<p><strong>当阶码为1，尾数码全为0 ：</strong>表示绝对值最小数</p>
-<p><strong>当阶码全为0，尾数码不全为0 ：</strong>表示非规格化小数，表示比绝对值最小数还要小的数，此时的尾数码隐藏位为0，而非1</p>
-<p><strong>当阶码全为0，尾数码也全为0 ：</strong>表示+/-0</p>
-<p><strong>当阶码全为1，尾数不全为0 ：</strong>表示NAN ，如0/0导致的非法结果</p>
-<p><strong>当阶码全为1，尾数全为0 ：</strong>表示正/负无穷</p>
+        <h2 id><a href="#" class="headerlink" title></a><span id="more"></span></h2><h3 id="补码算法分析"><a href="#补码算法分析" class="headerlink" title="补码算法分析"></a><center>补码算法分析</center></h3><h5 id="1-码制介绍："><a href="#1-码制介绍：" class="headerlink" title="1.码制介绍："></a>1.码制介绍：</h5><p><strong>原码</strong>：原码表示法在数值前面增加了一位符号位：正数符号位为0，负数符号位为1，其余位表示数值的大小。</p>
+<p><strong>补码</strong>：正数同原码相同，负数为其绝对值的原码按位取反加1。</p>
+<p><strong>移码</strong>：移码通常<strong>用于表示浮点数的阶码</strong>，其表示形式与补码相似，只是其符号位用“1”表示正数，用“0”表示负数，数值部分与补码相同。</p>
+<h5 id="2-运算算法推导"><a href="#2-运算算法推导" class="headerlink" title="2. 运算算法推导"></a>2. 运算算法推导</h5><blockquote>
+<p>此处选择补码进行算法推导说明</p>
 </blockquote>
-</li>
-<li><p>对于尾数码，按情况结合表达式在前面加上隐藏位1./0.即可</p>
-</li>
-</ul>
-<h4 id="2-运算算法推导"><a href="#2-运算算法推导" class="headerlink" title="2. 运算算法推导"></a>2. 运算算法推导</h4><ul>
+<ul>
 <li><strong>加法</strong></li>
 </ul>
-<p>加法的算法主要是对相加的两数进行阶数的对其，然后对结果进行规格化，正体如流程图所示：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">graph TB;</span><br><span class="line">A(开始)--&gt;B(调整尾数使指数相等)</span><br><span class="line">B --&gt; C(尾数相加)</span><br><span class="line">C --&gt; D(规格化)</span><br><span class="line">D --&gt; M(舍入)--&gt;S(规格化结束)--yes--&gt;E&#123;检查溢出&#125;--no--&gt;G(output)</span><br><span class="line">E --yes--&gt; l(异常输出)</span><br><span class="line">S --no--&gt; D</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>本算法在规格化结束后进行溢出检测，结合程序实现方式，这种算法在模拟测试中表示可行，且可以减少检测次数</p>
+<p>加法的算法与正常的二进制加法相同，将两数的补码相加，得到的结果即为和的补码</p>
+<blockquote>
+<p>proof:</p>
+<p>​    令补码表示的数a,b为n位，a+b = c</p>
+<p>​    当a，b均为整数，显然c为正数，所以其补码为其自身</p>
+<p>​    当a，b中一个为负数一个为正数：</p>
+<p>​        令a<0，b>0，所以a的补码$a’ = 2^n+a, b’ = b$</0，b></p>
+<p>​        所以$a’+b’ = 2^n+a+b = 2^n+(a+b) = c’$</p>
+<p>​        当$a+b\geq 0$时$c’ = c$</p>
+<p>​        当$a+b&lt;0$时$c’ = 2^n+c$</p>
+<p>​    当a,b均为负数时</p>
+<p>​        $a’ = 2^n+a,b’ = 2^n+b$</p>
+<p>​        所以$a’+b’ = 2^{n+1}+a+b$</p>
+<p>​        在有限位的截断作用下可以看出$a’+b’ = 2^n+(a+b) = c’$</p>
+</blockquote>
 <ul>
 <li><strong>减法</strong></li>
 </ul>
-<p>减法即为减数符号取反并进行加法</p>
+<p>减法即为将减数取反并进行加法，所得结果也为差的补码，因为减法本质同样为加法，所以在加法得证情况下减法亦得证</p>
 <ul>
 <li><strong>乘法</strong></li>
 </ul>
-<p>乘法在步骤上比加法少，对尾数与阶数的处理与加法有些不同，但最终的规格化基本相同</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">graph TB;</span><br><span class="line">A(开始)--&gt;B(阶数相加减去offset)--&gt;N(决定符号)</span><br><span class="line">N --&gt; C(尾数相乘)</span><br><span class="line">C --&gt; D(规格化)</span><br><span class="line">D --&gt; M(舍入)--&gt;S(规格化结束)--yes--&gt;E&#123;检查溢出&#125;--no--&gt;G(output)</span><br><span class="line">E --yes--&gt; l(异常输出)</span><br><span class="line">S --no--&gt; D</span><br></pre></td></tr></table></figure>
-<p>在实际实现算法时，尾数相乘尾数回突破32的上线，因此应该先用64位进行扩展，进行右移处理后获得相乘结果</p>
+<p>补码下，乘法运算为直接进行补码的运算，所得结果亦为乘积的补码</p>
+<blockquote>
+<p>proof:</p>
+<p>​    当a，b&gt;0时，显然成立</p>
+<p>​    当a<0 ,b>0时</0></p>
+<p>​        $a’ = 2^n+a,b’ = b$</p>
+<p>​        所以 $a’<em>b’ = 2^n</em>b+ab$</p>
+<p>​        由于我们的这里的运算仅涉及整数，所以有$b\geq 1$, 并且在有限位运算截断作用下</p>
+<p>​        所以$2^n*b+ab = (2^n+ab) = c’$</p>
+<p>​    当a，b&lt;0时</p>
+<p>​        $a’ = 2^n+a,b’ = 2^n+b$</p>
+<p>​        所以$a’<em>b’ = 2^{2n}+2^n</em>(a+b)+ab = 2^n*(2^n+a+b)+ab$        </p>
+<p>​        因为有$2^n+a+b\geq 0$ ，在有限位截断作用下$a’*b’ = ab = c’$</p>
+</blockquote>
 <ul>
 <li><strong>除法</strong></li>
 </ul>
-<p>除法过程与乘法大致类似，但最开始要讨论特殊情况，如0/0产生NAN，n/0产生无穷等，并且进行尾数除法时使用的是定点数除法</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">graph TB;</span><br><span class="line">A(开始)--&gt;X(特殊情况处理)--&gt;B(阶数相加减去offset)--&gt;N(决定符号)</span><br><span class="line">N --&gt; C(尾数定点数除法)</span><br><span class="line">C --&gt; D(规格化)</span><br><span class="line">D --&gt; M(舍入)--&gt;S(规格化结束)--yes--&gt;E&#123;检查溢出&#125;--no--&gt;G(output)</span><br><span class="line">E --yes--&gt; l(异常输出)</span><br><span class="line">S --no--&gt; D</span><br></pre></td></tr></table></figure>
-<h4 id="3-总结"><a href="#3-总结" class="headerlink" title="3.总结"></a>3.总结</h4><p>浮点数的处理主要还是对于阶数的处理，以及对于特殊情况的讨论与处理，由于浮点数的尾数限制，计算精度一直是计算几种的难题，相比在硬件算法上进行大的改动，现在的主要趋势还是利用数值分析方法采用软件算法来提高计算结果精确度</p>
+<p>除法过程的结果要分情况进行讨论，主要算法为将两者的绝对值进行取相处，所得结果根据a,b的符号情况决定是否进行按位取反加1</p>
+<blockquote>
+<p>$c’ = (\abs{a}/ \abs{b})’$</p>
+<p>proof:</p>
+<p>​    当a，b&gt;0时，显然</p>
+<p>​    当a&gt;0，b&lt;0时, c = |a|/b, 并对c进行取反加1, 因为此时c定为负数</p>
+<p>​    当a&lt;0，b&lt;0时, c = |a|/|b| = a/b, 显然</p>
+</blockquote>
+<ul>
+<li><strong>取余</strong></li>
+</ul>
+<p>取余的算法过程与除法类似，由于取余的标准并不统一，因此此处选择最广为接受的方式即$a = qd+r,1\leq \abs{r} &lt; \abs{d}$</p>
+<blockquote>
+<p>$c’ = (\abs{a} mod \abs{b})’$</p>
+<p>proof:</p>
+<p>​    当a，b&gt;0时，直接取余</p>
+<p>​    当a<0，b>0时，c = |a|mod b ,对c按位取反加1</0，b></p>
+<p>​    当a，b&lt;0时，c = |a|mod|b|，所得结果即为正数补码</p>
+</blockquote>
+<h5 id="3-字位扩展、溢出检测、大小比较"><a href="#3-字位扩展、溢出检测、大小比较" class="headerlink" title="3.字位扩展、溢出检测、大小比较"></a>3.字位扩展、溢出检测、大小比较</h5><ul>
+<li><strong>字位扩展</strong></li>
+</ul>
+<p>补码的字位扩展按照符号位（即最高位）进行，当符号位为1时，扩展内容全为1，当符号位为0时，扩展内容全为0</p>
+<ul>
+<li><strong>溢出检测</strong></li>
+</ul>
+<p>我们集中于对加法的溢出检测，其余的运算在硬件实现时其实也是加法的变形</p>
+<blockquote>
+<p>当a ,b符号位均为0时，若结果符号位为1，正数之和不能为负数，证明产生溢出</p>
+<p>当a,b符号位均为1时，若结果符号位为0，负数之和不能为正数，证明产生溢出</p>
+<p>当a,b异号时，不会产生溢出，因为溢出的本质是结果绝对值超出允许范围，而异号相加一定减小整体的绝对值</p>
+<p>此处另介绍一种不用计算结果的溢出检测算法：</p>
+<p>Cs表示符号位的进位，Cp表示最高数值位进位，⊕表示异或。<br>若 Cs⊕Cp =0 ，无溢出<br>若 Cs⊕Cp =1 ，有溢出</p>
+</blockquote>
+<ul>
+<li><strong>大小比较</strong></li>
+</ul>
+<p>大小比较算法实际上只用对符号位不同的情况进行特别说明，当符号位相同时，可直接对补码进行比较</p>
+<blockquote>
+<p>proof:<br>    首先判断符号位，若a,b符号位相反，则为0的大</p>
+<p>​    若符号为相同，则直接比较：</p>
+<p>​        无论对于正数负数来说, 补码的本质是$a’ = 2^n+a$</p>
+<p>​        所以补码的转换并不改变其相对大小，直接比较就好</p>
+</blockquote>
+<h5 id="4-各码制优缺点分析"><a href="#4-各码制优缺点分析" class="headerlink" title="4.各码制优缺点分析"></a>4.各码制优缺点分析</h5><p>对于各码制的分析，实际上于各码制的设计初衷相关</p>
+<p>原码：原码本身的设计是为了利用符号位区分正负数同时，使数本身的绝对值直观表现得码制，因此，对于改码制得理解非常容易，但在运算与大小比较方面并没有补码和移码方便</p>
+<p>补码：补码同样拥有一个符号位，但是由于这一设置使其运算结果可以直接表示为补码形式，不需要在运算前后进行码制的过多转换，因此其在运算方面有着很出色的表现，现行计算机体系中大多也使用这种码制</p>
+<p>移码：移码的最直观的特点便是方便的大小比较，由于与补码相反的符号位表示方法，使其省去了补码中单独的正负判断过程，我们可以直接对移码值进行比较</p>
 
     </div>
 
@@ -307,12 +353,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2022/03/07/post001/" rel="prev" title="ADS_Note--RB-Tree">
-      <i class="fa fa-chevron-left"></i> ADS_Note--RB-Tree
+    <a href="/2022/03/09/post002/" rel="prev" title="ADS_Note--B+ Tree">
+      <i class="fa fa-chevron-left"></i> ADS_Note--B+ Tree
     </a></div>
       <div class="post-nav-item">
-    <a href="/2022/03/09/post002/" rel="next" title="ADS_Note--B+ Tree">
-      ADS_Note--B+ Tree <i class="fa fa-chevron-right"></i>
+    <a href="/2022/04/15/post003/" rel="next" title="浮点运算">
+      浮点运算 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -372,7 +418,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B5%AE%E7%82%B9%E6%95%B0%E7%AE%97%E6%B3%95%E5%88%86%E6%9E%90"><span class="nav-number">1.1.</span> <span class="nav-text">浮点数算法分析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-IEEE-754%E6%A0%87%E5%87%86%E6%B5%AE%E7%82%B9%E6%95%B0%EF%BC%9A"><span class="nav-number">1.1.1.</span> <span class="nav-text">1. IEEE 754标准浮点数：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E8%BF%90%E7%AE%97%E7%AE%97%E6%B3%95%E6%8E%A8%E5%AF%BC"><span class="nav-number">1.1.2.</span> <span class="nav-text">2. 运算算法推导</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E6%80%BB%E7%BB%93"><span class="nav-number">1.1.3.</span> <span class="nav-text">3.总结</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A1%A5%E7%A0%81%E7%AE%97%E6%B3%95%E5%88%86%E6%9E%90"><span class="nav-number">1.1.</span> <span class="nav-text">补码算法分析</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-%E7%A0%81%E5%88%B6%E4%BB%8B%E7%BB%8D%EF%BC%9A"><span class="nav-number">1.1.0.1.</span> <span class="nav-text">1.码制介绍：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-%E8%BF%90%E7%AE%97%E7%AE%97%E6%B3%95%E6%8E%A8%E5%AF%BC"><span class="nav-number">1.1.0.2.</span> <span class="nav-text">2. 运算算法推导</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-%E5%AD%97%E4%BD%8D%E6%89%A9%E5%B1%95%E3%80%81%E6%BA%A2%E5%87%BA%E6%A3%80%E6%B5%8B%E3%80%81%E5%A4%A7%E5%B0%8F%E6%AF%94%E8%BE%83"><span class="nav-number">1.1.0.3.</span> <span class="nav-text">3.字位扩展、溢出检测、大小比较</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-%E5%90%84%E7%A0%81%E5%88%B6%E4%BC%98%E7%BC%BA%E7%82%B9%E5%88%86%E6%9E%90"><span class="nav-number">1.1.0.4.</span> <span class="nav-text">4.各码制优缺点分析</span></a></li></ol></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -388,7 +434,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">4</span>
+          <span class="site-state-item-count">5</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
